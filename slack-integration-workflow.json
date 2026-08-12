@@ -1,0 +1,188 @@
+{
+  "name": "RAG Agent - Slack",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://extended-plausibly-ranging.ngrok-free.dev/ask",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "message",
+              "value": "={{$json.body.event.text}}"
+            },
+            {
+              "name": "user_id",
+              "value": "={{$json.body.event.user}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        352,
+        -16
+      ],
+      "id": "1b6e17c8-7d51-41e6-ae14-6eac3516b711",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0BNKC75B6G",
+          "mode": "list",
+          "cachedResultName": "rag-agent"
+        },
+        "text": "={{$json.answer}}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.5,
+      "position": [
+        576,
+        -16
+      ],
+      "id": "cbe05022-ea9a-43e0-8960-0a2f2aaf457f",
+      "name": "Send a message",
+      "webhookId": "d3598a7b-60db-4174-a939-3928ab4ad101",
+      "credentials": {
+        "slackApi": {
+          "id": "bpcY112ygcjTWFl5",
+          "name": "Slack account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "OK",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        -160,
+        32
+      ],
+      "id": "9ed11a85-ba52-445d-b493-c4824187f03f",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "8fb81467-eae0-46a6-8e93-66ab0d1bccbf",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -368,
+        32
+      ],
+      "id": "827192f5-d76f-44dc-8a67-9b9e317e3a4f",
+      "name": "Webhook",
+      "webhookId": "8fb81467-eae0-46a6-8e93-66ab0d1bccbf"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "1468ae86-1b98-4a9f-8732-03bf7ada452d",
+              "leftValue": "={{$json.body.event.bot_id}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        32,
+        32
+      ],
+      "id": "763f282d-f5fd-42a9-be06-ab0f1e3c34c7",
+      "name": "If"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "1321746e-0d88-46a8-9a32-5f04778ce6c4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f09d5a56cac5ff65bd426aa398ed44974fc7a1a7fdb3edc989e18ff6baabbbce"
+  },
+  "nodeGroups": [],
+  "id": "4t1XjUlMkRw0sha1",
+  "tags": []
+}
