@@ -4,7 +4,7 @@ An agentic AI support system that answers questions grounded in real documents u
 
 ![Demo](demo.gif)
 
-Watch the full demo video: PASTE_LINK_HERE
+[Watch the full demo video](https://www.linkedin.com/posts/ali-hassnain-bhatti-1a0506312_aiagents-rag-langchain-ugcPost-7493498449347289088-AiGX/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE90BYgBQ0oeKLBO3aYcAnU7PbU8sp-OTcw)
 
 ## Why this project
 
@@ -168,5 +168,5 @@ python evaluate.py
 
 Built by Ali Hassnain Bhatti, AI Automation Engineer specializing in voice agents, RAG systems, and CRM/API integrations.
 
-LinkedIn: https://www.linkedin.com/in/ali-hassnain-bhatti-1a0506312/
+LinkedIn: https://www.linkedin.com/in/ali-hassnain-bhatti-1a0506312/ 
 Email: thealibhatti.dev@gmail.com
